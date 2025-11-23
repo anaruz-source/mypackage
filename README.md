@@ -82,7 +82,7 @@ def test_top_n():
     assert myModule.top_n([8, 3, 2, 7, 4], 3) == [8, 7, 4]
 ```
 ### 5. Run setp
-````
+```
 python setup sdist
 ```
 > then create ```.gitignore``` and put in the following:
