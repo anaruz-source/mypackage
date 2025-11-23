@@ -1,0 +1,137 @@
+# Python Package Creation Guide
+
+A quick reference for building and distributing Python packages on GitHub.
+
+## Prerequisites
+
+- Visual Studio Code
+- Git
+- GitHub account
+
+## Quick Start
+
+### 1. Project Structure
+
+Create the following directory structure:
+
+```
+mypackage/
+├── mypackage/
+│   ├── __init__.py
+│   └── myModule.py
+├── tests/
+│   └── test.py
+├── setup.py
+└── README.md
+```
+
+### 2. Write Your Function
+
+In `myModule.py`, create your function with proper docstrings:
+
+```python
+def top_n(items, n):
+    """Return the top n items in an array, in descending order.
+    
+    Args:
+        items (array): list or array-like object containing numerical values.
+        n (int): number of top items to return.
+    
+    Returns:
+        array: top n items, in descending order.
+    
+    Examples:
+        >>> top_n([8, 3, 2, 7, 4], 3)
+        [8, 7, 3]
+    """
+    # Your function implementation here
+```
+
+### 3. Configure Package
+
+In `__init__.py`:
+```python
+from . import myModule
+```
+
+In `setup.py`:
+```python
+from setuptools import setup, find_packages
+
+setup(
+    name='mypackage',
+    version='0.1',
+    packages=find_packages(exclude=['tests*']),
+    license='MIT',
+    description='Your package description',
+    long_description=open('README.md').read(),
+    install_requires=['numpy'],
+    url='https://github.com/<username>/<repo>',
+    author='<Your Name>',
+    author_email='<Your Email>'
+)
+```
+
+### 4. Write Tests
+
+In `tests/test.py`:
+```python
+from mypackage import myModule
+
+def test_top_n():
+    assert myModule.top_n([8, 3, 2, 7, 4], 3) == [8, 7, 4]
+```
+### 5. Run setp
+````
+python setup sdist
+```
+> then create ```.gitignore``` and put in the following:
+> - mypackage.egg-info
+> - mypackage/__pycache__  
+### 6. Publish to GitHub
+
+```bash
+# Initialize local repository
+git init
+git add .
+git commit -m "First commit"
+
+# Create repository on GitHub, then push
+git remote add origin <remoteURL>
+git push origin master
+```
+
+### 7. Install Package
+
+```bash
+pip install git+https://github.com/your-name/your-repo.git
+```
+
+## Update Workflow
+
+1. Make changes locally
+2. Update version in `setup.py`
+3. Push to GitHub:
+   ```bash
+   git add .
+   git commit -m "description of changes"
+   git push
+   ```
+4. Install updated version:
+   ```bash
+   pip install --upgrade git+https://github.com/your-name/your-repo.git
+   ```
+
+## Naming Conventions
+
+- Use short, lowercase names
+- Avoid underscores when possible
+- Example: `mypackage` not `My_Package`
+
+## Key setup.py Parameters
+
+- **name**: Package name (e.g., numpy, pandas)
+- **version**: Current version number
+- **license**: License type (e.g., MIT)
+- **description**: One-sentence description
+- **install_requires**: List of dependencies
